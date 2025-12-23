@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Objets</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      width: 250px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .card h2 {
+      font-size: 1.2em;
+      margin: 10px 0 5px;
+    }
+    .card p {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .card .price {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Liste des Objets</h1>
+  <div class="container" id="items-container">
+    <!-- Les objets vont être ajoutés ici via JavaScript -->
+  </div>
+
+  <script>
+    // URL de ton API
+    const API_URL = 'http://localhost:3000/api/stuff';
+
+    // Fonction pour récupérer les données
+    async function fetchItems() {
+      try {
+        const response = await fetch(API_URL);
+        const items = await response.json();
+
+        const container = document.getElementById('items-container');
+        container.innerHTML = ''; // On vide avant d'ajouter
+
+        items.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${item.imageUrl}" alt="${item.title}">
+            <h2>${item.title}</h2>
+            <p>${item.description}</p>
+            <div class="price">${item.price} FCFA</div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
+      }
+    }
+
+    // On appelle la fonction au chargement de la page
+    fetchItems();
+  </script>
+
+</body>
+</html>
