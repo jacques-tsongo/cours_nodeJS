@@ -32,22 +32,23 @@ app.set('views', path.join(__dirname, '../frontend'));
 
 //je configure l'acces aux fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend')));
-
+//la route de login ou d'enregisttrement des objects
 app.get('/login',(req,res,next)=>{
   res.status(200).render('posts')
 })
+//la route d'accueil
 app.get('/',(req,res,next)=>{
   res.status(200).render('index');
 });
 
-
+//'insertion d'un nouvel object dans la base de donnee
 app.post('/api/stuff', (req, res, next) => {
-  delete req.body._id;
-  const thing = new Thing({
+  delete req.body._id; //supprimer l'id qui vient par defaut avec le body
+  const thing = new Thing({   //on cree un nouvel object Thing avec les donnees du formulaire
     ...req.body
   });
-  thing.save()
-  .then(() => res.status(200).redirect('/'))
+  thing.save() //la... la methode save() nous permet d'enregistrer les donnees 
+  .then(() => res.status(200).redirect('/')) //la redirection apres insertion
   .catch(error => res.status(400).json({ error }))
 });
 
