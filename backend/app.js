@@ -37,7 +37,7 @@ app.get('/login',(req,res,next)=>{
   res.status(200).render('posts')
 })
 app.get('/',(req,res,next)=>{
-  res.status(200).send('<h1>Bienvenue sur mon API REST</h1>')
+  res.status(200).render('index');
 });
 
 
@@ -47,7 +47,7 @@ app.post('/api/stuff', (req, res, next) => {
     ...req.body
   });
   thing.save()
-  .then(() => res.status(200).json({ message : "l'objet enregistrer" }))
+  .then(() => res.status(200).redirect('/'))
   .catch(error => res.status(400).json({ error }))
 });
 
