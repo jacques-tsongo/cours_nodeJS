@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= thing.title %></title>
+    <link rel="stylesheet" href="../frontend/css/detail.css">
+    <link rel="stylesheet" href="../frontend/css/main.css">
+</head>
+
+<body>
+    <div class="detail">
+        <button onclick="window.location.href='/'">Retour</button>
+        <h1>
+            <%= thing.title %>
+        </h1>
+
+        <img src="<%= thing.imageUrl %>" width="300">
+
+        <p>
+            <%= thing.description %>
+        </p>
+        <p><strong>
+                <%= thing.price %> FCFA
+            </strong></p>
+
+        <br>
+
+
+        <button onclick="window.location.href='/edit/<%= thing._id %>'">
+            Modifier
+        </button>
+
+        <form action="/api/stuff/<%= thing._id %>?_method=DELETE" method="POST">
+            <button type="submit">Supprimer</button>
+        </form>
+    </div>
+</body>
+
+</html>
