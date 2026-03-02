@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ajouter un Objet</title>
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
+<!-- la on inclue l'entete de la navigation dans la page selon le moteur de visualisation ejs -->
+
+  <%- include('composants/entete') %>
 
   <h1>Ajouter un nouvel objet</h1>
   <form id="addItemForm" action="/api/stuff" method="POST">
