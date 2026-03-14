@@ -38,16 +38,6 @@
             <button class="btn_delete" type="submit">Supprimer</button>
         </form>
     </div>
-    <div class="update">
-        <h1>Modifier l'objet</h1>
-        <form id="update_form" action="/api/stuff/<%= thing._id %>?_method=PUT" method="POST">
-            <input type="text" id="title" name="title" placeholder="Titre pour la photo" required  value="<%- thing.title %>">
-            <textarea id="description" name="description" placeholder="Description pour la photo" rows="3"  required><%- thing.description %></textarea>
-            <input type="text" id="imageUrl" name="imageUrl" placeholder="URL de l'image de la photo" required value="<%- thing.imageUrl %>">
-            <input type="number" id="price" name="price" placeholder="Prix" required value="<%- thing.price %>">
-            <button type="submit">Enregistrer</button>
-        </form>
-    </div>
 </body>
 
 </html>
