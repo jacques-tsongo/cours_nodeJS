@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier l'objet</title>
+    <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
+
+</head>
+
+<body
+    style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background-color: #f0f0f0;">
+    <div class="update">
+        <button class="close" onclick="window.location.href = `/api/stuff/<%= thing._id %>`;">
+            <i class="fi fi-rr-cross closeModal"></i>
+        </button>
+        <h1>Modifier l'objet</h1>
+        <form id="update_form" action="/api/stuff/<%= thing._id %>?_method=PUT" method="POST">
+            <input type="text" id="title" name="title" placeholder="Titre pour la photo" required
+                value="<%- thing.title %>">
+            <textarea id="description" name="description" placeholder="Description pour la photo" rows="3"
+                required><%- thing.description %></textarea>
+            <input type="text" id="imageUrl" name="imageUrl" placeholder="URL de l'image de la photo" required
+                value="<%- thing.imageUrl %>">
+            <input type="number" id="price" name="price" placeholder="Prix" required value="<%- thing.price %>">
+            <button type="submit">Enregistrer</button>
+        </form>
+    </div>
+</body>
+
+</html>
