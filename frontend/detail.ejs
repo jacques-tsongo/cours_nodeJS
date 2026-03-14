@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= thing.title %></title>
-    <link rel="stylesheet" href="../frontend/css/detail.css">
-    <link rel="stylesheet" href="../frontend/css/main.css">
+    <title>
+        <%= thing.title %>
+    </title>
+    <link rel="stylesheet" href="/css/detail.css">
+    <!-- <link rel="stylesheet" href="../frontend/css/main.css"> -->
 </head>
 
 <body>
     <div class="detail">
-        <button onclick="window.location.href='/'">Retour</button>
+        <button class="btn_back" onclick="window.location.href='/'">Retour</button>
         <h1>
             <%= thing.title %>
         </h1>
@@ -28,12 +30,22 @@
         <br>
 
 
-        <button onclick="window.location.href='/edit/<%= thing._id %>'">
+        <button class="btn_update" onclick="window.location.href='/edit/<%= thing._id %>'">
             Modifier
         </button>
 
         <form action="/api/stuff/<%= thing._id %>?_method=DELETE" method="POST">
-            <button type="submit">Supprimer</button>
+            <button class="btn_delete" type="submit">Supprimer</button>
+        </form>
+    </div>
+    <div class="update">
+        <h1>Modifier l'objet</h1>
+        <form id="update_form" action="/api/stuff/<%= thing._id %>?_method=PUT" method="POST">
+            <input type="text" id="title" name="title" placeholder="Titre pour la photo" required  value="<%- thing.title %>">
+            <textarea id="description" name="description" placeholder="Description pour la photo" rows="3"  required><%- thing.description %></textarea>
+            <input type="text" id="imageUrl" name="imageUrl" placeholder="URL de l'image de la photo" required value="<%- thing.imageUrl %>">
+            <input type="number" id="price" name="price" placeholder="Prix" required value="<%- thing.price %>">
+            <button type="submit">Enregistrer</button>
         </form>
     </div>
 </body>
