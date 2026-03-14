@@ -58,6 +58,18 @@ app.get('/api/stuff/:id', (req, res, next) => {
     .catch(error => res.status(404).json({ error }));
 });
 
+// la route pour la page de modification d'un object
+app.get('/edit/:id', (req, res) => {
+  Thing.findOne({ _id: req.params.id })
+    .then(thing => res.status(200).render('edit', { thing }))
+    .catch(error => res.status(404).json({ error }));
+});
+app.get('/api/stuff/:id', (req, res, next) => {
+  Thing.findOne({ _id: req.params.id })
+    .then(thing => res.status(200).render('detail', { thing }))
+    .catch(error => res.status(404).json({ error }));
+});
+
 // la route pour la mis a jour
 app.put('/api/stuff/:id', (req, res) => {
   Thing.updateOne(
@@ -66,12 +78,6 @@ app.put('/api/stuff/:id', (req, res) => {
   )
   .then(() => res.redirect('/'))
   .catch(error => res.status(400).json({ error }));
-});
-
-// 🔹 PAGE DETAIL
-app.get('/detail/:id', async (req, res) => {
-  const thing = await Thing.findOne({ _id: req.params.id });
-  res.render('detail', { thing });
 });
 
 app.get('/api/stuff', (req, res, next) => {
