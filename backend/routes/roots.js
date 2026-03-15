@@ -5,8 +5,8 @@ const controler = require('../controlers/controler'); //importation du controler
 
 
 
-router.get('/login', controler.sendLoginPage); //la route de login ou d'enregisttrement des objects
-router.get('/', controler.sendHomePage);  //la route d'accueil
+router.get('/home', controler.sendHomePage);  //la route d'accueil
+router.get('/publish', controler.sendLoginPage); //la route de login ou d'enregisttrement des objects
 router.post('/api/stuff', controler.createThing);//'insertion d'un nouvel object dans la base de donnee
 router.get('/api/stuff/:id', controler.findOneThing); //la route pour afficher les details d'un object
 router.get('/edit/:id', controler.sendEditPage); //la route pour afficher la page de mis a jour d'un object

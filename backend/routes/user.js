@@ -3,9 +3,9 @@ const router = express.Router();
 const userController = require('../controlers/user'); //importation du controler
 
 //la route pour l'inscription d'un utilisateur
-router.get('/signup', userController.authSignup);
+router.get('/', userController.authSignup);
 router.get('/login', userController.authLogin);
-router.post('/signup', userController.signup);
+router.post('/', userController.signup);
 router.post('/login', userController.login);
 
 
