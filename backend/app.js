@@ -2,7 +2,10 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 
-const Thing = require("./models/thing")//je exporte le model des donnees
+// exportation des routes
+const Router = require('./routes/roots');
+const userRouter = require('./routes/user');
+
 
 const app = express();
 
@@ -15,7 +18,6 @@ mongoose.connect('mongodb+srv://kaserekatsongojacques2023:jacquesmongo2004@clust
 //je configure body-parser pour qu'il puisse,  intercepter les requetes
 app.use(express.urlencoded({ extended : true }))
 app.use(express.json());
-
 
 //la on donne les autorisations d'acces a l'API et regler le probleme de cors
 app.use((req, res, next) => {
@@ -32,64 +34,8 @@ app.set('views', path.join(__dirname, '../frontend'));
 
 //je configure l'acces aux fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend')));
-//la route de login ou d'enregisttrement des objects
-app.get('/login',(req,res,next)=>{
-  res.status(200).render('posts')
-})
-//la route d'accueil
-app.get('/',(req,res,next)=>{
-  res.status(200).render('index');
-});
 
-//'insertion d'un nouvel object dans la base de donnee
-app.post('/api/stuff', (req, res, next) => {
-  delete req.body._id; //supprimer l'id qui vient par defaut avec le body
-  const thing = new Thing({   //on cree un nouvel object Thing avec les donnees du formulaire
-    ...req.body
-  });
-  thing.save() //la... la methode save() nous permet d'enregistrer les donnees 
-  .then(() => res.status(200).redirect('/')) //la redirection apres insertion
-  .catch(error => res.status(400).json({ error }))
-});
-
-app.get('/api/stuff/:id', (req, res, next) => {
-  Thing.findOne({ _id: req.params.id })
-    .then(thing => res.status(200).render('detail', { thing }))
-    .catch(error => res.status(404).json({ error }));
-});
-
-// la route pour la page de modification d'un object
-app.get('/edit/:id', (req, res) => {
-  Thing.findOne({ _id: req.params.id })
-    .then(thing => res.status(200).render('edit', { thing }))
-    .catch(error => res.status(404).json({ error }));
-});
-app.get('/api/stuff/:id', (req, res, next) => {
-  Thing.findOne({ _id: req.params.id })
-    .then(thing => res.status(200).render('detail', { thing }))
-    .catch(error => res.status(404).json({ error }));
-});
-
-// la route pour la mis a jour
-app.put('/api/stuff/:id', (req, res) => {
-  Thing.updateOne(
-    { _id: req.params.id },
-    { ...req.body }
-  )
-  .then(() => res.redirect('/'))
-  .catch(error => res.status(400).json({ error }));
-});
-
-app.get('/api/stuff', (req, res, next) => {
-Thing.find()
-  .then(things => res.status(200).json(things))
-  .catch(error => res.status(400).json({ error }));
-});
-
-
-
-
-
+app.use('/', Router)
 
 
 module.exports = app; //la on exporte le module express pour pouvoir 
