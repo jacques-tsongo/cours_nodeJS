@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const userController = require('../controlers/user'); //importation du controler
+
+//la route pour l'inscription d'un utilisateur
+router.post('/signup', userController.singup);
+router.post('/login', userController.login);
 
 
 
