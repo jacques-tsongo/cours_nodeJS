@@ -17,7 +17,7 @@
             <i class="fi fi-rr-cross closeModal"></i>
         </button>
         <h1>Modifier l'objet</h1>
-        <form id="update_form" action="/api/stuff/<%= thing._id %>?_method=PUT" method="POST">
+        <form id="update_form" action="/edit/<%= thing._id %>" method="POST">
             <input type="text" id="title" name="title" placeholder="Titre pour la photo" required
                 value="<%- thing.title %>">
             <textarea id="description" name="description" placeholder="Description pour la photo" rows="3"
