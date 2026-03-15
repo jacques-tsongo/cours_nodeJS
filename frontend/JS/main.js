@@ -26,7 +26,7 @@ async function fetchItems() {
       const card = document.createElement('div');
       card.className = 'card';
 
-      // IMPORTANT 👇
+      // IMPORTANT 
       card.dataset.id = item._id;
 
       card.innerHTML = `
