@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // exportation des routes
 const Router = require('./routes/roots');
-const userRouter = require('./routes/user');
+const userRouter = require('./routes/User');
 
 
 const app = express();
@@ -36,6 +36,7 @@ app.set('views', path.join(__dirname, '../frontend'));
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use('/', Router)
+app.use('/api/auth', userRouter);
 
 
 module.exports = app; //la on exporte le module express pour pouvoir 

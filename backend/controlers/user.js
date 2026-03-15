@@ -40,3 +40,12 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error })
         );
 };
+
+
+exports.authSignup = (req, res, next) => {
+    res.status(200).render('signup');
+}
+
+exports.authLogin = (req, res, next) => {
+    res.status(200).render('login');
+} 
