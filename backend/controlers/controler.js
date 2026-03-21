@@ -14,7 +14,7 @@ exports.createThing = (req, res, next) => {
     ...req.body
   });
   thing.save() //la... la methode save() nous permet d'enregistrer les donnees 
-  .then(() => res.status(200).redirect('/')) //la redirection apres insertion
+  .then(() => res.status(200).redirect('/home')) //la redirection apres insertion
   .catch(error => res.status(400).json({ error }))
 }
 
@@ -38,13 +38,13 @@ exports.sendDetailPage = (req, res, next) => {
 
 exports.updateOneThing = (req, res) => {
   Thing.updateOne({ _id: req.params.id },{ ...req.body })
-  .then(() => res.redirect('/'))
+  .then(() => res.redirect('/home'))
   .catch(error => res.status(400).json({ error }));
 }
 
 exports.deleteOneThing = (req, res, next) => {
   Thing.deleteOne({ _id: req.params.id })
-    .then(() => res.redirect('/'))
+    .then(() => res.redirect('/home'))
     .catch(error => res.status(400).json({ error }));
 }
 
