@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,74 @@
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/main.css">
 </head>
+
 <body>
-<!-- la on inclue l'entete de la navigation dans la page selon le moteur de visualisation ejs -->
+  <!-- la on inclue l'entete de la navigation dans la page selon le moteur de visualisation ejs -->
 
   <%- include('composants/entete') %>
 
-  <h1>Ajouter un nouvel objet</h1>
-  <form id="addItemForm" action="/api/stuff" method="POST">
-    <input type="text" id="title" name="title" placeholder="Titre pour la photo" required>
-    <textarea id="description" name="description" placeholder="Description pour la photo" rows="3" required></textarea>
-    <input type="text" id="imageUrl" name="imageUrl" placeholder="URL de l'image de la photo" required>
-    <input type="number" id="price" name="price" placeholder="Prix" required>
-    <button type="submit">Ajouter</button>
-  </form>
+<h1>Ajouter un nouvel objet</h1>
 
+<form id="addItemForm" enctype="multipart/form-data">
+  
+  <input type="text" id="title" placeholder="Titre" required>
+
+  <textarea id="description" placeholder="Description" required></textarea>
+
+  <!-- input file corrigé -->
+  <input type="file" id="image" name="image" required style="display: none;" />
+
+  <button type="button" id="btnUpload">Ajouter image</button>
+
+  <img id="preview" />
+
+  <input type="number" id="price" placeholder="Prix" required>
+
+  <button type="submit">Ajouter</button>
+
+</form>
+
+    <script>
+      const form = document.getElementById('addItemForm');
+      const fileInput = document.getElementById('image');
+      const btnUpload = document.getElementById('btnUpload');
+      const preview = document.getElementById('preview');
+
+      // bouton ouvre le file picker
+      btnUpload.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      // preview image
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (file) {
+          preview.src = URL.createObjectURL(file);
+        }
+      });
+
+      // envoi formulaire
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+
+        formData.append('image', fileInput.files[0]);
+
+        formData.append('thing', JSON.stringify({
+          title: document.getElementById('title').value,
+          description: document.getElementById('description').value,
+          price: document.getElementById('price').value
+        }));
+
+        await fetch('http://localhost:3300/publish', {
+          method: 'POST',
+          body: formData
+        });
+
+        console.log('Objet envoyé');
+      });
+    </script>
 </body>
+
 </html>
