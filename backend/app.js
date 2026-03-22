@@ -35,6 +35,8 @@ app.set('views', path.join(__dirname, '../frontend'));
 //je configure l'acces aux fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend')));
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 app.use('/', Router)
 app.use('/', userRouter);
 
