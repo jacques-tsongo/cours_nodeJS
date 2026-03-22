@@ -9,14 +9,29 @@ exports.sendHomePage = (req,res,next)=>{
 };
 
 exports.createThing = (req, res, next) => {
-  delete req.body._id; //supprimer l'id qui vient par defaut avec le body
-  const thing = new Thing({   //on cree un nouvel object Thing avec les donnees du formulaire
-    ...req.body
-  });
-  thing.save() //la... la methode save() nous permet d'enregistrer les donnees 
-  .then(() => res.status(200).redirect('/home')) //la redirection apres insertion
-  .catch(error => res.status(400).json({ error }))
-}
+   const thingObject = JSON.parse(req.body.thing);
+   delete thingObject._id;
+   delete thingObject._userId;
+   const thing = new Thing({
+       ...thingObject,
+       userId: req.userId,
+       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+   });
+ 
+   thing.save()
+   .then(() => { res.status(201).json({message: 'Objet enregistré !'})})
+   .catch(error => { res.status(400).json( { error })})
+};
+
+// exports.createThing = (req, res, next) => {
+//   delete req.body._id; //supprimer l'id qui vient par defaut avec le body
+//   const thing = new Thing({   //on cree un nouvel object Thing avec les donnees du formulaire
+//     ...req.body
+//   });
+//   thing.save() //la... la methode save() nous permet d'enregistrer les donnees 
+//   .then(() => res.status(200).redirect('/home')) //la redirection apres insertion
+//   .catch(error => res.status(400).json({ error }))
+// }
 
 exports.findOneThing = (req, res, next) => {
   Thing.findOne({ _id: req.params.id })
