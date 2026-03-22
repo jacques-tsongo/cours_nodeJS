@@ -1,4 +1,5 @@
 const express = require('express');
+// const auth = require('../middlewere/auth');
 const router = express.Router();
 
 const controler = require('../controlers/controler'); //importation du controler    

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link rel="stylesheet" href="/css/loginSignup.css">
 </head>
+
 <body>
     <div class="signup">
         <form action="/login" method="post">
@@ -14,5 +16,36 @@
             <button type="submit">Login</button>
         </form>
     </div>
+
+
+    <!-- <form id="loginForm">
+        <input type="email" id="email" required>
+        <input type="password" id="password" required>
+        <button type="submit">Se connecter</button>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const res = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+
+            // 🔥 stocker token
+            localStorage.setItem('token', data.token);
+
+            // 🔥 redirection
+            window.location.href = '/home';
+        });
+    </script> -->
 </body>
+
 </html>
