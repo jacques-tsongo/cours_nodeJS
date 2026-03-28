@@ -1,26 +1,26 @@
 const Thing = require('../models/thing'); //exportation du model des donnees
 
-exports.sendLoginPage = (req,res,next)=>{
+exports.sendLoginPage = (req, res, next) => {
   res.status(200).render('posts')
 };
 
-exports.sendHomePage = (req,res,next)=>{
+exports.sendHomePage = (req, res, next) => {
   res.status(200).render('index');
 };
 
 exports.createThing = (req, res, next) => {
-   const thingObject = JSON.parse(req.body.thing);
-   delete thingObject._id;
-   delete thingObject._userId;
-   const thing = new Thing({
-       ...thingObject,
-       userId: req.userId,
-       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-   });
- 
-   thing.save()
-   .then(() => { res.status(201).json({message: 'Objet enregistré !'})})
-   .catch(error => { res.status(400).json( { error })})
+  const thingObject = JSON.parse(req.body.thing);
+  delete thingObject._id;
+  delete thingObject._userId;
+  const thing = new Thing({
+    ...thingObject,
+    userId: req.userId,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  });
+
+  thing.save()
+    .then(() => { res.status(300).redirect('/home') })
+    .catch(error => { res.status(400).json({ error }) })
 };
 
 // exports.createThing = (req, res, next) => {
@@ -52,9 +52,9 @@ exports.sendDetailPage = (req, res, next) => {
 }
 
 exports.updateOneThing = (req, res) => {
-  Thing.updateOne({ _id: req.params.id },{ ...req.body })
-  .then(() => res.redirect('/home'))
-  .catch(error => res.status(400).json({ error }));
+  Thing.updateOne({ _id: req.params.id }, { ...req.body })
+    .then(() => res.redirect('/home'))
+    .catch(error => res.status(400).json({ error }));
 }
 
 exports.deleteOneThing = (req, res, next) => {
@@ -64,7 +64,7 @@ exports.deleteOneThing = (req, res, next) => {
 }
 
 exports.findAllThings = (req, res, next) => {
-Thing.find()
-  .then(things => res.status(200).json(things))
-  .catch(error => res.status(400).json({ error }));
+  Thing.find()
+    .then(things => res.status(200).json(things))
+    .catch(error => res.status(400).json({ error }));
 }
