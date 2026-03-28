@@ -1,5 +1,7 @@
 const Thing = require('../models/thing'); //exportation du model des donnees
 
+const fs = require('fs');
+
 exports.sendLoginPage = (req, res, next) => {
   res.status(200).render('posts')
 };
@@ -51,16 +53,38 @@ exports.sendDetailPage = (req, res, next) => {
     .catch(error => res.status(404).json({ error }));
 }
 
-exports.updateOneThing = (req, res) => {
-  Thing.updateOne({ _id: req.params.id }, { ...req.body })
-    .then(() => res.redirect('/home'))
-    .catch(error => res.status(400).json({ error }));
+exports.updateOneThing = (req, res, next) => {
+  const thingObject = req.file ? {
+    ...JSON.parse(req.body.thing),
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  } : { ...req.body };
+
+  delete thingObject._userId;
+  Thing.findOne({ _id: req.params.id })
+    .then((thing) => {
+      Thing.updateOne({ _id: req.params.id }, { ...thingObject, _id: req.params.id })
+        .then(() => res.status(300).redirect('/home'))
+        .catch(error => res.status(401).json({ error }));
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
+
 }
 
 exports.deleteOneThing = (req, res, next) => {
-  Thing.deleteOne({ _id: req.params.id })
-    .then(() => res.redirect('/home'))
-    .catch(error => res.status(400).json({ error }));
+  Thing.findOne({ _id: req.params.id })
+    .then(thing => {
+      const filename = thing.imageUrl.split('/images/')[1];
+      fs.unlink(`images/${filename}`, () => {
+        Thing.deleteOne({ _id: req.params.id })
+          .then(() => { res.status(300).redirect('/home') })
+          .catch(error => res.status(401).json({ error }));
+      });
+    })
+    .catch(error => {
+      res.status(500).json({ error });
+    });
 }
 
 exports.findAllThings = (req, res, next) => {
