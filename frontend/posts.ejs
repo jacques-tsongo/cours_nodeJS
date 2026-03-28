@@ -71,9 +71,10 @@
         await fetch('http://localhost:3300/api/stuff', {
           method: 'POST',
           body: formData
-        });
-
-        console.log('Objet envoyé');
+        })
+          //la redirection apres insertion
+          .then(() => window.location.href = '/home')
+          .catch(error => console.error(error));
       });
     </script>
 </body>
