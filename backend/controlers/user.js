@@ -12,7 +12,7 @@ exports.signup = (req, res, next) => {
             });
             return user.save();
         })
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+        .then(() => res.status(300).redirect("/home"))
         .catch(error => res.status(400).json({ error }));
 };
 
@@ -30,6 +30,7 @@ exports.login = (req, res, next) => {
                         return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
                     }
 
+                    //le sytheme de jwt qui nous permet de gerer l'authentification
                     // return res.status(200).json({
                     //     userId: user._id,
                     //     token: jwt.sign(

@@ -14,26 +14,26 @@
 
   <%- include('composants/entete') %>
 
-<h1>Ajouter un nouvel objet</h1>
+    <h1>Ajouter un nouvel objet</h1>
 
-<form id="addItemForm" enctype="multipart/form-data">
-  
-  <input type="text" id="title" placeholder="Titre" required>
+    <form id="addItemForm" enctype="multipart/form-data">
 
-  <textarea id="description" placeholder="Description" required></textarea>
+      <input type="text" id="title" placeholder="Titre" required>
 
-  <!-- input file corrigé -->
-  <input type="file" id="image" name="image" required style="display: none;" />
+      <textarea id="description" placeholder="Description" required></textarea>
 
-  <button type="button" id="btnUpload">Ajouter image</button>
+      <!-- input file corrigé -->
+      <input type="file" id="image" name="image" required style="display: none;" />
 
-  <img id="preview" />
+      <button type="button" id="btnUpload">Ajouter image</button>
 
-  <input type="number" id="price" placeholder="Prix" required>
+      <img id="preview" />
 
-  <button type="submit">Ajouter</button>
+      <input type="number" id="price" placeholder="Prix" required>
 
-</form>
+      <button type="submit">Ajouter</button>
+
+    </form>
 
     <script>
       const form = document.getElementById('addItemForm');
@@ -68,7 +68,7 @@
           price: document.getElementById('price').value
         }));
 
-        await fetch('http://localhost:3300/publish', {
+        await fetch('http://localhost:3300/api/stuff', {
           method: 'POST',
           body: formData
         });
