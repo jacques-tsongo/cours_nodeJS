@@ -16,7 +16,7 @@ mongoose.connect('mongodb+srv://kaserekatsongojacques2023:jacquesmongo2004@clust
 
 
 //je configure body-parser pour qu'il puisse,  intercepter les requetes
-app.use(express.urlencoded({ extended : true }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
 //la on donne les autorisations d'acces a l'API et regler le probleme de cors
@@ -29,16 +29,17 @@ app.use((req, res, next) => {
 
 
 //je configure le moteur de visualisation ejs
-app.set("view engine","ejs");
+app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, '../frontend'));
 
 //je configure l'acces aux fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/', Router)
 app.use('/', userRouter);
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 module.exports = app; //la on exporte le module express pour pouvoir 
